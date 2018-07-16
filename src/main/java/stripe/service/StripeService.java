@@ -157,4 +157,14 @@ public class StripeService {
 
         return nova;
     }
+
+    public Transaction findTransaction(Integer id, String id_stripe) {
+        Transaction response = new Transaction();
+        if (id == null){
+            response = mapper.findPerTxID(-1, id_stripe);
+        } else {
+            response = mapper.findPerTxID(id, id_stripe);
+        }
+        return response;
+    }
 }

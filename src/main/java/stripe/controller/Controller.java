@@ -18,6 +18,12 @@ public class Controller {
     @Autowired
     StripeService service;
 
+    @GetMapping("/transactions")
+    public Transaction findTransaction (@RequestParam (value = "id", required = false) Integer id,
+                                        @RequestParam(value = "id_stripe", required = false) String id_stripe){
+        return service.findTransaction(id,id_stripe);
+    }
+
     @PostMapping("/transactions")
     public Transaction creatingTransaction(@RequestBody Transaction trans ){
         Transaction nova = null;
