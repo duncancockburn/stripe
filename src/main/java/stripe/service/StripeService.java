@@ -9,11 +9,19 @@ import org.springframework.stereotype.Service;
 import stripe.mapper.MapperTransRef;
 import stripe.model.db.RefundDB;
 import stripe.model.db.Transaction;
+import stripe.model.db.UserDb;
 import stripe.model.stripeResponse.ChargeRes;
 import stripe.model.stripeResponse.RefundRes;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.xml.bind.DatatypeConverter;
+import java.nio.charset.Charset;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class StripeService {
@@ -249,5 +257,43 @@ public class StripeService {
         // amount is set to -1, so it does a complete refund
         response = refundOneTransactionPartially(id,-1);
         return response;
+    }
+
+    public UserDb createNewUser(UserDb userDb) {
+        // getting the info from body
+        UserDb toBerecorded = new UserDb();
+        toBerecorded.setFirst_name(userDb.getFirst_name());
+        toBerecorded.setLast_name(userDb.getLast_name());
+
+        // creating APIKey
+        String apikey = null;
+        try {
+            apikey = createApiKey();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        // setting apikey to user
+        toBerecorded.setApiKey(apikey);
+
+        // recording user in the db
+        mapper.insertUserDB(toBerecorded);
+
+        // return user + password
+        return toBerecorded;
+    }
+
+    public static String createApiKey() throws NoSuchAlgorithmException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        SecureRandom secureRandom = new SecureRandom();
+        int keyBitSize = 256;
+
+        keyGenerator.init(keyBitSize, secureRandom);
+        SecretKey secretKey = keyGenerator.generateKey();
+
+        System.out.println(secretKey.toString().toString());
+        byte[] encoded = secretKey.getEncoded();
+        String key =  DatatypeConverter.printHexBinary(encoded).toLowerCase();
+        return key.substring(0,20);
     }
 }
