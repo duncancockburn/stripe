@@ -18,6 +18,19 @@ public class Controller {
     @Autowired
     StripeService service;
 
+    @DeleteMapping("/transactions")
+    public Transaction refundTotal (@RequestParam ("id") Integer id){
+        Transaction response = service.refundTotal(id);
+        return response;
+    }
+
+    @PatchMapping("/transactions")
+    public Transaction refundPartial (@RequestParam ("id") Integer id,
+                                      @RequestParam ("amount") Integer amount){
+        Transaction response = service.refundOneTransactionPartially(id, amount );
+        return response;
+    }
+
     @GetMapping("/transactions")
     public Transaction findTransaction (@RequestParam (value = "id", required = false) Integer id,
                                         @RequestParam(value = "id_stripe", required = false) String id_stripe){
@@ -37,7 +50,7 @@ public class Controller {
         return  charge = service.testApi();
     }
 
-    @RequestMapping("/Refund")
+    @RequestMapping("/RefundDB")
     public RefundRes refundTransaction(
             @RequestParam("id") String id,
             @RequestParam(  value = "amount", required = false) Integer amount) {

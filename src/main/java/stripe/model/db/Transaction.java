@@ -7,7 +7,7 @@ public class Transaction {
     String source;
     String receipt_email;
     String id_stripe;
-    int amount_refunded;
+    long amount_refunded;
     boolean captured;
     boolean refund;
     boolean paid;
@@ -60,11 +60,11 @@ public class Transaction {
         this.id_stripe = id_stripe;
     }
 
-    public int getAmount_refunded() {
+    public long getAmount_refunded() {
         return amount_refunded;
     }
 
-    public void setAmount_refunded(int amount_refunded) {
+    public void setAmount_refunded(long amount_refunded) {
         this.amount_refunded = amount_refunded;
     }
 

@@ -1,10 +1,19 @@
 package stripe.model.db;
 
-public class Refund {
+public class RefundDB {
 
     int id;
     String id_stripe;
-    int amount;
+    long amount;
+    int transaction_id;
+
+    public int getTransaction_id() {
+        return transaction_id;
+    }
+
+    public void setTransaction_id(int transaction_id) {
+        this.transaction_id = transaction_id;
+    }
 
     public int getId() {
         return id;
@@ -22,11 +31,11 @@ public class Refund {
         this.id_stripe = id_stripe;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 }

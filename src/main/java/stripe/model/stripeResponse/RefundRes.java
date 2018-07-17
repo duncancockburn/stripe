@@ -4,6 +4,15 @@ public class RefundRes {
     String transaction_id;
     String refund_id;
     String status;
+    long amount;
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
 
     public String getTransaction_id() {
         return transaction_id;

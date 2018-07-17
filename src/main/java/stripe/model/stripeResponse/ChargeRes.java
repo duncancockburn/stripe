@@ -4,7 +4,7 @@ public class ChargeRes {
     String id;
     String object;
     int amount;
-    int amount_refunded;
+    long amount_refunded;
     boolean captured;
     boolean paid;
     boolean refund;
@@ -33,11 +33,11 @@ public class ChargeRes {
         this.amount = amount;
     }
 
-    public int getAmount_refunded() {
+    public long getAmount_refunded() {
         return amount_refunded;
     }
 
-    public void setAmount_refunded(int amount_refunded) {
+    public void setAmount_refunded(long amount_refunded) {
         this.amount_refunded = amount_refunded;
     }
 
